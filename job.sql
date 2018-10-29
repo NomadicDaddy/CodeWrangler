@@ -25,7 +25,7 @@ EXEC @ReturnCode =  msdb.dbo.sp_add_job @job_name=N'CodeWrangler',
 		@category_name=N'Database Maintenance', @job_id = @jobId OUTPUT
 IF (@@ERROR <> 0 OR @ReturnCode <> 0) GOTO QuitWithRollback
 /****** Object:  Step [usp_codeWrangler]    Script Date: 4/9/2014 9:15:23 AM ******/
-EXEC @ReturnCode = msdb.dbo.sp_add_jobstep @job_id=@jobId, @step_name=N'exec master.dbo.[pr_codeWrangler] ;',
+EXEC @ReturnCode = msdb.dbo.sp_add_jobstep @job_id=@jobId, @step_name=N'exec master.dbo.[pr_CodeWrangler] ;',
 		@step_id=1,
 		@cmdexec_success_code=0,
 		@on_success_action=1,
@@ -35,7 +35,7 @@ EXEC @ReturnCode = msdb.dbo.sp_add_jobstep @job_id=@jobId, @step_name=N'exec mas
 		@retry_attempts=0,
 		@retry_interval=0,
 		@os_run_priority=0, @subsystem=N'TSQL',
-		@command=N'exec master.dbo.[pr_codeWrangler] ;',
+		@command=N'exec master.dbo.[pr_CodeWrangler] ;',
 		@database_name=N'master',
 		@flags=4
 IF (@@ERROR <> 0 OR @ReturnCode <> 0) GOTO QuitWithRollback
