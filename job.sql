@@ -24,7 +24,7 @@ EXEC @ReturnCode =  msdb.dbo.sp_add_job @job_name=N'CodeWrangler',
 		@description=N'Creates an archive copy of all monitored (configurable) database objects essentially maintaining a current and historic data dictionary. Scans for new and changed objects on each execution. The initial execution will store all existing objects first.',
 		@category_name=N'Database Maintenance', @job_id = @jobId OUTPUT
 IF (@@ERROR <> 0 OR @ReturnCode <> 0) GOTO QuitWithRollback
-/****** Object:  Step [usp_codeWrangler]    Script Date: 4/9/2014 9:15:23 AM ******/
+/****** Object:  Step [pr_codeWrangler]    Script Date: 4/9/2014 9:15:23 AM ******/
 EXEC @ReturnCode = msdb.dbo.sp_add_jobstep @job_id=@jobId, @step_name=N'exec master.dbo.[pr_CodeWrangler] ;',
 		@step_id=1,
 		@cmdexec_success_code=0,
