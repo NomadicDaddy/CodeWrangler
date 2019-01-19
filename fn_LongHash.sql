@@ -3,11 +3,11 @@ go
 
 set quoted_identifier, ansi_nulls on ;
 
-if exists (select 1 from INFORMATION_SCHEMA.ROUTINES where [routine_name] = 'udf_longHash')
-	drop function dbo.[udf_longHash] ;
+if exists (select 1 from information_schema.routines where [routine_schema] = 'dbo' and [routine_name] = 'fn_LongHash')
+	drop function dbo.[fn_LongHash] ;
 go
 
-create function dbo.[udf_longHash] (
+create function dbo.[fn_LongHash] (
 	@data varbinary(max)
 )
 returns varbinary(max)
@@ -16,7 +16,7 @@ as
 begin
 
 -----------------------------------------------------------------------------------------------------------------------
--- Procedure:	udf_longHash
+-- Procedure:	fn_LongHash
 -- Author:		Phillip Beazley (phillip@beazley.org)
 -- Date:		06/08/2012
 --
@@ -52,18 +52,9 @@ return @res ;
 end
 go
 
--- report success/failure and assign permissions as needed
-if (exists (select 1 from INFORMATION_SCHEMA.ROUTINES where [routine_name] = 'udf_longHash'))
-begin
-	print ':: installed dbo.[udf_longHash] on ' + Convert(varchar, serverproperty('servername')) ;
-	grant execute on [udf_longHash] to public ;
-end
-else
-	print ':: failed to install dbo.[udf_longHash] on ' + Convert(varchar, serverproperty('servername')) ;
-go
 return ;
 
 -- example(s)
 declare @theHash varbinary(max) ;
-select @theHash = dbo.[udf_longHash](Convert(varbinary(max), Replicate(Convert(varchar(max), 'a'), 9999))) ;
+select @theHash = dbo.[fn_LongHash](Convert(varbinary(max), Replicate(Convert(varchar(max), 'a'), 9999))) ;
 print @theHash ;
